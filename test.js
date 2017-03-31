@@ -1,16 +1,14 @@
-/* jshint -W104 */
-/* jshint -W119 */
 'use strict';
-const Saferphore = require('./index');
-const assert = (x) => { if (!x) { throw new Error(); } };
+var Saferphore = require('./index');
+var assert = function (x) { if (!x) { throw new Error(); } };
 
-const basicTest = () => {
-    const sem = Saferphore.create(4);
-    const out = [];
-    new Array(10).fill().forEach((x,y) => {
-        sem.take((returnAfter) => {
+var basicTest = function () {
+    var sem = Saferphore.create(4);
+    var out = [];
+    new Array(10).fill().forEach(function (x,y) {
+        sem.take(function (returnAfter) {
             out.push(y);
-            setTimeout(returnAfter(() => {
+            setTimeout(returnAfter(function () {
                 if (out.length === 10) {
                     if (out.join() !== "0,1,2,3,4,5,6,7,8,9") { throw new Error(); }
                 }
@@ -22,14 +20,14 @@ const basicTest = () => {
     }
 };
 
-const doubleCallTest = () => {
-    const sem = Saferphore.create(4);
-    const catcher = setTimeout(() => {
+var doubleCallTest = function () {
+    var sem = Saferphore.create(4);
+    var catcher = setTimeout(function () {
         throw new Error();
     }, 1000);
-    sem.take((returnAfter) => {
-        setTimeout(returnAfter(() => {
-            setTimeout(() => {
+    sem.take(function (returnAfter) {
+        setTimeout(returnAfter(function () {
+            setTimeout(function () {
                 clearTimeout(catcher);
                 try { returnAfter()(); } catch (e) { return; }
                 throw new Error();
@@ -38,13 +36,13 @@ const doubleCallTest = () => {
     });
 };
 
-const doubleCallbackTest = () => {
-    const sem = Saferphore.create(4);
-    const catcher = setTimeout(() => {
+var doubleCallbackTest = function () {
+    var sem = Saferphore.create(4);
+    var catcher = setTimeout(function () {
         throw new Error();
     }, 1000);
-    sem.take((returnAfter) => {
-        let wrapped = returnAfter();
+    sem.take(function (returnAfter) {
+        var wrapped = returnAfter();
         wrapped();
         try { wrapped(); } catch (e) { clearTimeout(catcher); return; }
         throw new Error();
