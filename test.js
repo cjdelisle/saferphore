@@ -5,7 +5,7 @@ var assert = function (x) { if (!x) { throw new Error(); } };
 var basicTest = function () {
     var sem = Saferphore.create(4);
     var out = [];
-    new Array(10).fill().forEach(function (x,y) {
+    (new Array(10)).join().split(',').forEach(function (x,y) {
         sem.take(function (returnAfter) {
             out.push(y);
             setTimeout(returnAfter(function () {
