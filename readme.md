@@ -1,5 +1,12 @@
 # Saferphore - Node semaphore with protection against double-returning
 
+    # node
+    npm install --save saferphore
+
+    # Browser
+    bower install --save saferphore
+
+
 ```javascript
 const Saferphore = require('saferphore');
 
