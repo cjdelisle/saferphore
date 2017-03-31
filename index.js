@@ -1,4 +1,7 @@
-module.exports.create = function (resourceCount) {
+/*@flow*/
+;(function () {
+"use strict";
+var create = function (resourceCount /*:number*/) {
     var queue = [];
     var check;
     var mkRa = function () {
@@ -23,9 +26,19 @@ module.exports.create = function (resourceCount) {
         queue.shift()(mkRa());
     };
     return {
-        take: function (func) {
+        take: function (func /*:((...Array<any>)=>(...Array<any>)=>void)=>void*/) {
             queue.push(func);
             check();
         }
     };
 };
+if (typeof(window) === 'object') {
+    if (window.define && window.define.amd) {
+        window.define({ create: create });
+    } else {
+        window.Saferphore = { create: create };
+    }
+} else if (typeof(module) === 'object' && module.exports) {
+    module.exports.create = create;
+}
+}());

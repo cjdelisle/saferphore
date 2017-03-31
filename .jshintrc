@@ -2,6 +2,7 @@
     "laxcomma": true,
     "laxbreak": true,
     "node": true,
+    "browser": true,
     "sub": true,
     "curly": true,
     "eqeqeq": true,
@@ -11,6 +12,5 @@
     "notypeof": true,
     "shadow": false,
     "undef": true,
-    "unused": false,
-    "esversion": 6
+    "unused": false
 }

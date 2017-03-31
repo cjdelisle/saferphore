@@ -1,3 +1,5 @@
+/* jshint -W104 */
+/* jshint -W119 */
 'use strict';
 const Saferphore = require('./index');
 const assert = (x) => { if (!x) { throw new Error(); } };
