@@ -1,10 +1,16 @@
 /*@flow*/
+/*::
+export type Saferphore_ReturnAfter_t = ((...any)=>void)=>(...any)=>void;
+export type Saferphore_t = {
+    take: ((Saferphore_ReturnAfter_t)=>void)=>void,
+};
+*/
 ;(function () {
 "use strict";
-var create = function (resourceCount /*:number*/) {
+var create = function (resourceCount /*:number*/) /*:Saferphore_t*/ {
     var queue = [];
     var check;
-    var mkRa = function () {
+    var mkRa = function () /*:Saferphore_ReturnAfter_t*/ {
         var outerCalled = 0;
         return function (func) {
             if (outerCalled++) { throw new Error("returnAfter() called multiple times"); }
@@ -26,7 +32,7 @@ var create = function (resourceCount /*:number*/) {
         queue.shift()(mkRa());
     };
     return {
-        take: function (func /*:((...Array<any>)=>(...Array<any>)=>void)=>void*/) {
+        take: function (func) {
             queue.push(func);
             check();
         }
